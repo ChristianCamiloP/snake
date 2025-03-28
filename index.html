@@ -3,33 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Juego de Preguntas</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Juego de Atrapando el Círculo</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="script.js" defer></script>
 </head>
 <body>
   <div id="game-container">
-    <h1>Juego de Preguntas</h1>
-    
-    <div id="question-container">
-      <h2 id="question">Pregunta aparecerá aquí</h2>
-      <button class="answer" onclick="checkAnswer('Respuesta 1')">Respuesta 1</button>
-      <button class="answer" onclick="checkAnswer('Respuesta 2')">Respuesta 2</button>
-      <button class="answer" onclick="checkAnswer('Respuesta 3')">Respuesta 3</button>
-      <button class="answer" onclick="checkAnswer('Respuesta 4')">Respuesta 4</button>
-    </div>
-
-    <div id="result"></div>
-
-    <div id="high-scores">
-      <h3>Puntuaciones más altas:</h3>
-      <ul id="highScoresList"></ul>
+    <h1>Juego de Atrapando el Círculo</h1>
+    <p>Puntos: <span id="score">0</span></p>
+    <p>Tiempo restante: <span id="timer">30</span> segundos</p>
+    <div id="circle"></div>
+    <div id="game-over" style="display: none;">
+      <h2>¡Juego Terminado!</h2>
+      <p>Tu puntuación: <span id="final-score"></span></p>
+      <button id="save-score-btn">Guardar Puntaje</button>
     </div>
   </div>
-
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js" type="module"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js" type="module"></script>
-  <script src="firebaseConfig.js" type="module"></script>
-  <script src="script.js" type="module"></script>
 </body>
 </html>

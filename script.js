@@ -67,3 +67,57 @@ function startGame() {
   // Obtener y mostrar las puntuaciones más altas
   getHighScores();
 }
+// Variables globales
+let currentQuestionIndex = 0;
+const questions = [
+  {
+    question: "¿Cuál es la capital de Francia?",
+    answers: ["Paris", "Londres", "Madrid", "Roma"],
+    correctAnswer: "Paris"
+  },
+  {
+    question: "¿Cuál es la capital de España?",
+    answers: ["Paris", "Madrid", "Londres", "Roma"],
+    correctAnswer: "Madrid"
+  }
+  // Agrega más preguntas aquí...
+];
+
+// Función para cargar la pregunta
+function loadQuestion() {
+  const question = questions[currentQuestionIndex];
+  document.getElementById("question").textContent = question.question;
+
+  const buttons = document.querySelectorAll(".answer");
+  buttons.forEach((button, index) => {
+    button.textContent = question.answers[index];
+  });
+}
+
+// Función para manejar la selección de respuesta
+function checkAnswer(selectedAnswer) {
+  const correctAnswer = questions[currentQuestionIndex].correctAnswer;
+  
+  if (selectedAnswer === correctAnswer) {
+    document.getElementById("result").textContent = "¡Respuesta correcta!";
+  } else {
+    document.getElementById("result").textContent = "¡Respuesta incorrecta!";
+  }
+
+  // Avanzar a la siguiente pregunta después de 2 segundos
+  setTimeout(() => {
+    currentQuestionIndex++;
+    
+    if (currentQuestionIndex < questions.length) {
+      loadQuestion(); // Cargar la siguiente pregunta
+      document.getElementById("result").textContent = ''; // Limpiar el mensaje anterior
+    } else {
+      document.getElementById("result").textContent = "¡Has completado el juego!";
+    }
+  }, 2000);
+}
+
+// Cargar la primera pregunta al iniciar el juego
+window.onload = function() {
+  loadQuestion();
+};

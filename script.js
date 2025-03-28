@@ -1,3 +1,6 @@
+import { database } from "./firebaseConfig.js"; // Asegúrate de importar la configuración correctamente
+import { ref, set } from "firebase/database"; // Importa las funciones necesarias de Firebase
+
 document.addEventListener("DOMContentLoaded", () => {
   const words = ["casa", "perro", "gato", "sol", "luz", "nube", "agua", "fuego", "árbol", "roca"];
   let time = 60;
@@ -34,11 +37,11 @@ document.addEventListener("DOMContentLoaded", () => {
           alert("Por favor, ingresa tu nombre.");
           return;
       }
-      
+
       gameArea.style.display = "block";
       startButton.style.display = "none";
       playerNameInput.style.display = "none";
-      
+
       currentWord = getRandomWord();
       wordDisplay.textContent = currentWord;
       inputWord.focus();
@@ -60,35 +63,33 @@ document.addEventListener("DOMContentLoaded", () => {
           score++;
           scoreDisplay.textContent = score;
           inputWord.value = "";
-          
+
           currentWord = getRandomWord();
           if (currentWord === "") return; // Si no hay más palabras, termina el juego
-          
+
           wordDisplay.textContent = currentWord;
       }
   }
 
+  // Función para guardar el puntaje en Firebase
   function saveScore() {
-      if (typeof database !== "undefined") {
-          database.ref("players/" + playerName).set({
-              name: playerName,
-              score: score,
-              timestamp: new Date().toISOString()
-          }).then(() => {
-              console.log("Puntaje guardado en Firebase");
-          }).catch((error) => {
-              console.error("Error al guardar en Firebase: ", error);
-          });
-      } else {
-          console.error("Firebase no está inicializado.");
-      }
+      const playerRef = ref(database, "players/" + playerName);
+      set(playerRef, {
+          name: playerName,
+          score: score,
+          timestamp: new Date().toISOString()
+      }).then(() => {
+          console.log("Puntaje guardado en Firebase");
+      }).catch((error) => {
+          console.error("Error al guardar en Firebase: ", error);
+      });
   }
 
   function endGame() {
       clearInterval(timer);
       gameOver = true;
       inputWord.disabled = true;
-      saveScore();
+      saveScore(); // Guarda el puntaje en Firebase al terminar el juego
       alert(`Juego terminado. Puntaje: ${score}`);
   }
 

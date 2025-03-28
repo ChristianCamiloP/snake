@@ -1,5 +1,5 @@
 // script.js
-import { db } from '././firebaseConfig.js';
+import { db } from './firebaseConfig.js';
 import { collection, getDocs, addDoc, query, orderBy, limit } from 'firebase/firestore';
 
 // Variables globales
@@ -37,8 +37,11 @@ const questions = [
 
 // Función para cargar la pregunta y respuestas
 function loadQuestion() {
+  console.log('Cargando pregunta...'); // Debugging
   if (currentQuestionIndex < questions.length) {
     const question = questions[currentQuestionIndex];
+    console.log('Pregunta cargada:', question); // Debugging
+
     document.getElementById("question").textContent = question.question;
 
     const buttons = document.querySelectorAll(".answer");
@@ -48,6 +51,8 @@ function loadQuestion() {
     });
 
     document.getElementById("result").textContent = '';
+  } else {
+    console.log('No hay más preguntas'); // Debugging
   }
 }
 
@@ -117,5 +122,6 @@ async function getHighScores() {
 
 // Cargar la primera pregunta cuando se cargue la página
 window.onload = function() {
+  console.log('Juego cargado'); // Debugging
   loadQuestion();
 };

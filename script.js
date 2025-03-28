@@ -33,15 +33,15 @@ document.addEventListener("DOMContentLoaded", () => {
     return word;
   }
 
-  // Comenzar el juego
+  // Iniciar el juego
   function startGame() {
     playerName = playerNameInput.value.trim();
     if (!playerName) {
       alert("Por favor, ingresa tu nombre.");
       return;
     }
-    
-    console.log("Juego Iniciado", playerName);  // Debugging: Log para confirmar inicio
+
+    console.log("Juego Iniciado", playerName); // Log para depuración
 
     gameArea.style.display = "block";
     startButton.style.display = "none";
@@ -78,9 +78,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Guardar el puntaje en Firebase
+  // Guardar puntaje en Firebase
   function saveScore() {
-    if (!playerName || score === 0) return; // Evitar guardar sin puntaje ni nombre
+    if (!playerName || score === 0) return; // Evitar guardar sin nombre o puntaje
 
     // Guardar puntaje en Firebase
     const playerRef = ref(database, "players/" + playerName);
@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
   inputWord.addEventListener("input", checkWord);
 
   startButton.addEventListener("click", () => {
-    console.log("Botón de iniciar clickeado"); // Debugging: Log para verificar evento
+    console.log("Botón de iniciar clickeado");  // Log para depuración
     startGame();
   });
 

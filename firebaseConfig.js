@@ -1,6 +1,6 @@
-// Importar los módulos necesarios desde el SDK de Firebase
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs } from "firebase/firestore";
+import { getAnalytics } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore";
 
 // Tu configuración de Firebase (reemplaza con tu propia configuración)
 const firebaseConfig = {
@@ -14,6 +14,7 @@ const firebaseConfig = {
 
 // Inicializa Firebase
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 // Inicializa Firestore
 const db = getFirestore(app);

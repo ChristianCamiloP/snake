@@ -1,31 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego de Escritura</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juego de Palabras</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Juego de Escritura Rápida</h1>
-        <p>Ingresa tu nombre para comenzar:</p>
-        <input type="text" id="player-name" placeholder="Tu nombre">
-        <button id="start-game">Iniciar Juego</button>
-        
-        <div id="game-area" style="display: none;">
-            <p>Escribe la palabra que aparece a continuación lo más rápido posible.</p>
-            <h2 id="word"></h2>
-            <input type="text" id="input-word" placeholder="Escribe aquí...">
-            <p>Tiempo restante: <span id="time">60</span> s</p>
-            <p>Puntaje: <span id="score">0</span></p>
-            <button id="restart">Reiniciar</button>
-        </div>
-    </div>
+  <div class="container">
+    <h1>Juego de Palabras</h1>
+    <input type="text" id="player-name" placeholder="Ingresa tu nombre" />
+    <button id="start-game">Iniciar juego</button>
     
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-    <script src="firebaseConfig.js"></script>
-    <script src="script.js"></script>
+    <div id="game-area">
+      <h2 id="word"></h2>
+      <input type="text" id="input-word" placeholder="Escribe la palabra" />
+      <p id="time">Tiempo: 60</p>
+      <p id="score">Puntaje: 0</p>
+      <button id="restart">Reiniciar</button>
+    </div>
+  </div>
+
+  <script type="module" src="firebaseConfig.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>

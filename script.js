@@ -41,6 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     
+    console.log("Juego Iniciado", playerName);  // Debugging: Log para confirmar inicio
+
     gameArea.style.display = "block";
     startButton.style.display = "none";
     playerNameInput.style.display = "none";
@@ -107,8 +109,13 @@ document.addEventListener("DOMContentLoaded", () => {
     location.reload();
   }
 
-  // Eventos
+  // Agregar eventos
   inputWord.addEventListener("input", checkWord);
-  startButton.addEventListener("click", startGame);
+
+  startButton.addEventListener("click", () => {
+    console.log("Botón de iniciar clickeado"); // Debugging: Log para verificar evento
+    startGame();
+  });
+
   restartButton.addEventListener("click", restartGame);
 });

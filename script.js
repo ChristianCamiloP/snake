@@ -1,4 +1,3 @@
-// script.js
 import { db } from './firebaseConfig.js';
 import { collection, addDoc, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
@@ -35,36 +34,47 @@ function loadQuestion() {
     buttons.forEach((button, index) => {
       button.textContent = question.answers[index];
       button.disabled = false; // Asegúrate de que los botones sean habilitados nuevamente
+      button.classList.remove("correct", "incorrect"); // Quitar clases anteriores
     });
 
-    document.getElementById("result").textContent = '';
+    document.getElementById("result").textContent = ''; // Limpiar resultados anteriores
   }
 }
 
-// Función para verificar la respuesta seleccionada
+// Función para manejar la selección de respuesta
 function checkAnswer(selectedAnswer) {
   const correctAnswer = questions[currentQuestionIndex].correctAnswer;
+
+  const buttons = document.querySelectorAll(".answer");
+
+  // Deshabilitar todos los botones después de la respuesta
+  buttons.forEach(button => button.disabled = true);
 
   if (selectedAnswer === correctAnswer) {
     score++;
     document.getElementById("result").textContent = "¡Respuesta correcta!";
+    // Marcar el botón como correcto
+    const correctButton = Array.from(buttons).find(button => button.textContent === correctAnswer);
+    correctButton.classList.add("correct");
   } else {
     document.getElementById("result").textContent = "¡Respuesta incorrecta!";
+    // Marcar el botón incorrecto
+    const incorrectButton = Array.from(buttons).find(button => button.textContent === selectedAnswer);
+    incorrectButton.classList.add("incorrect");
+    // Marcar el botón correcto
+    const correctButton = Array.from(buttons).find(button => button.textContent === correctAnswer);
+    correctButton.classList.add("correct");
   }
-
-  // Desactivar los botones después de una respuesta
-  const buttons = document.querySelectorAll(".answer");
-  buttons.forEach(button => button.disabled = true);
 
   // Avanzar a la siguiente pregunta después de 2 segundos
   setTimeout(() => {
     currentQuestionIndex++;
-
+    
     if (currentQuestionIndex < questions.length) {
-      loadQuestion();
+      loadQuestion(); // Cargar la siguiente pregunta
     } else {
       document.getElementById("result").textContent = "¡Has completado el juego!";
-      saveScore();
+      saveScore(); // Guardar el puntaje cuando se complete el juego
     }
   }, 2000);
 }

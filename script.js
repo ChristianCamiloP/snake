@@ -4,6 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let score = 0;
   let currentWord = "";
   let playerName = "";
+  let timer;
+  let gameOver = false;
+  let usedWords = new Set();
 
   const playerNameInput = document.getElementById("player-name");
   const startButton = document.getElementById("start-game");
@@ -15,7 +18,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const restartButton = document.getElementById("restart");
 
   function getRandomWord() {
-      return words[Math.floor(Math.random() * words.length)];
+      const remainingWords = words.filter(word => !usedWords.has(word));
+      if (remainingWords.length === 0) {
+          endGame();
+          return "";
+      }
+      let word = remainingWords[Math.floor(Math.random() * remainingWords.length)];
+      usedWords.add(word);
+      return word;
   }
 
   function startGame() {
@@ -33,34 +43,53 @@ document.addEventListener("DOMContentLoaded", () => {
       wordDisplay.textContent = currentWord;
       inputWord.focus();
 
-      const timer = setInterval(() => {
-          time--;
-          timeDisplay.textContent = time;
-          if (time === 0) {
-              clearInterval(timer);
-              saveScore();
-              alert(`Tiempo agotado. Puntaje: ${score}`);
-              restartGame();
+      timer = setInterval(() => {
+          if (time > 0) {
+              time--;
+              timeDisplay.textContent = time;
+          } else {
+              endGame();
           }
       }, 1000);
   }
 
   function checkWord() {
+      if (gameOver) return;
+
       if (inputWord.value.trim() === currentWord) {
           score++;
           scoreDisplay.textContent = score;
           inputWord.value = "";
+          
           currentWord = getRandomWord();
+          if (currentWord === "") return; // Si no hay más palabras, termina el juego
+          
           wordDisplay.textContent = currentWord;
       }
   }
 
   function saveScore() {
-      database.ref("players/" + playerName).set({
-          name: playerName,
-          score: score,
-          timestamp: new Date().toISOString()
-      });
+      if (typeof database !== "undefined") {
+          database.ref("players/" + playerName).set({
+              name: playerName,
+              score: score,
+              timestamp: new Date().toISOString()
+          }).then(() => {
+              console.log("Puntaje guardado en Firebase");
+          }).catch((error) => {
+              console.error("Error al guardar en Firebase: ", error);
+          });
+      } else {
+          console.error("Firebase no está inicializado.");
+      }
+  }
+
+  function endGame() {
+      clearInterval(timer);
+      gameOver = true;
+      inputWord.disabled = true;
+      saveScore();
+      alert(`Juego terminado. Puntaje: ${score}`);
   }
 
   function restartGame() {

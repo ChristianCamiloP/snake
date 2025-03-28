@@ -1,31 +1,87 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego de Escritura</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Juego de Escritura Rápida</h1>
-        <p>Ingresa tu nombre para comenzar:</p>
-        <input type="text" id="player-name" placeholder="Tu nombre">
-        <button id="start-game">Iniciar Juego</button>
-        
-        <div id="game-area" style="display: none;">
-            <p>Escribe la palabra que aparece a continuación lo más rápido posible.</p>
-            <h2 id="word"></h2>
-            <input type="text" id="input-word" placeholder="Escribe aquí...">
-            <p>Tiempo restante: <span id="time">60</span> s</p>
-            <p>Puntaje: <span id="score">0</span></p>
-            <button id="restart">Reiniciar</button>
-        </div>
-    </div>
-    
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-    <script src="firebaseConfig.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+document.addEventListener("DOMContentLoaded", () => {
+  const words = ["casa", "perro", "gato", "sol", "luz", "nube", "agua", "fuego", "árbol", "roca"];
+  let time = 60;
+  let score = 0;
+  let currentWord = "";
+  let playerName = "";
+  let timer;
+  let gameOver = false;
+
+  const playerNameInput = document.getElementById("player-name");
+  const startButton = document.getElementById("start-game");
+  const gameArea = document.getElementById("game-area");
+  const wordDisplay = document.getElementById("word");
+  const inputWord = document.getElementById("input-word");
+  const timeDisplay = document.getElementById("time");
+  const scoreDisplay = document.getElementById("score");
+  const restartButton = document.getElementById("restart");
+
+  function getRandomWord() {
+      return words[Math.floor(Math.random() * words.length)];
+  }
+
+  function startGame() {
+      playerName = playerNameInput.value.trim();
+      if (!playerName) {
+          alert("Por favor, ingresa tu nombre.");
+          return;
+      }
+      
+      gameArea.style.display = "block";
+      startButton.style.display = "none";
+      playerNameInput.style.display = "none";
+      
+      currentWord = getRandomWord();
+      wordDisplay.textContent = currentWord;
+      inputWord.focus();
+
+      timer = setInterval(() => {
+          if (time > 0) {
+              time--;
+              timeDisplay.textContent = time;
+          } else {
+              endGame();
+          }
+      }, 1000);
+  }
+
+  function checkWord() {
+      if (gameOver) return;
+
+      if (inputWord.value.trim() === currentWord) {
+          score++;
+          scoreDisplay.textContent = score;
+          inputWord.value = "";
+          currentWord = getRandomWord();
+          wordDisplay.textContent = currentWord;
+      }
+  }
+
+  function saveScore() {
+      database.ref("players/" + playerName).set({
+          name: playerName,
+          score: score,
+          timestamp: new Date().toISOString()
+      }).then(() => {
+          console.log("Puntaje guardado en Firebase");
+      }).catch((error) => {
+          console.error("Error al guardar en Firebase: ", error);
+      });
+  }
+
+  function endGame() {
+      clearInterval(timer);
+      gameOver = true;
+      inputWord.disabled = true;
+      saveScore();
+      alert(`Tiempo agotado. Puntaje: ${score}`);
+  }
+
+  function restartGame() {
+      location.reload();
+  }
+
+  inputWord.addEventListener("input", checkWord);
+  startButton.addEventListener("click", startGame);
+  restartButton.addEventListener("click", restartGame);
+});

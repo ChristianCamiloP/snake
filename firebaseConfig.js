@@ -1,21 +1,24 @@
-// firebaseConfig.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore";
 
-// Tu configuración de Firebase (reemplaza con tu propia configuración)
+// Configuración de Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyDhgSdpsEd91_M4fa0EMBnbDeDUkwH2ojs",
-  authDomain: "db-preguntas.firebaseapp.com",
-  projectId: "db-preguntas",
-  storageBucket: "db-preguntas.firebasestorage.app",
-  messagingSenderId: "1017897171716",
-  appId: "1:1017897171716:web:a02f9095d2db96d85b2e51"
+  apiKey: "AIzaSyAphrLdNrDnOyFJwY6dVD8oJTTYA-DXAME",
+  authDomain: "juego-db.firebaseapp.com",
+  projectId: "juego-db",
+  storageBucket: "juego-db.firebasestorage.app",
+  messagingSenderId: "967613130349",
+  appId: "1:967613130349:web:2f4c21392cad7d6dc60164",
+  measurementId: "G-64PBJ1EJX4"
 };
 
 // Inicializa Firebase
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 // Inicializa Firestore
 const db = getFirestore(app);
 
-export { db };
+export { db };  // Exporta la instancia de Firestore
+export default firebaseConfig;

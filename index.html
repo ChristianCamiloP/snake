@@ -5,38 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Juego de Preguntas</title>
   
+  <!-- Enlace al archivo de estilo -->
+  <link rel="stylesheet" href="style.css">
+
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
 </head>
 <body>
-  <h1>Juego de Preguntas</h1>
-
-  <!-- Botón para comenzar el juego -->
-  <button onclick="startGame()">Empezar Juego</button>
-
-  <!-- Display para mostrar la puntuación -->
-  <div id="scoreDisplay"></div>
-
-  <!-- Mostrar la puntuación guardada en Firestore -->
-  <div id="highScoresDisplay">
-    <h3>Puntuaciones más altas:</h3>
-    <ul id="highScoresList"></ul>
-  </div>
-
-  <script src="script.js"></script> <!-- Incluye tu archivo de JavaScript -->
-  <div id="question-container">
-    <h2 id="question">¿Cuál es la capital de Francia?</h2>
+  <div id="game-container">
+    <h1>Juego de Preguntas</h1>
     
-    <button class="answer" onclick="checkAnswer('Paris')">Paris</button>
-    <button class="answer" onclick="checkAnswer('Londres')">Londres</button>
-    <button class="answer" onclick="checkAnswer('Madrid')">Madrid</button>
-    <button class="answer" onclick="checkAnswer('Roma')">Roma</button>
+    <div id="question-container">
+      <h2 id="question">Pregunta aparecerá aquí</h2>
+      <button class="answer" onclick="checkAnswer('Respuesta1')">Respuesta 1</button>
+      <button class="answer" onclick="checkAnswer('Respuesta2')">Respuesta 2</button>
+      <button class="answer" onclick="checkAnswer('Respuesta3')">Respuesta 3</button>
+      <button class="answer" onclick="checkAnswer('Respuesta4')">Respuesta 4</button>
+    </div>
+
+    <div id="result"></div>
+
+    <div id="high-scores">
+      <h3>Puntuaciones más altas:</h3>
+      <ul id="highScoresList"></ul>
+    </div>
   </div>
-  
-  
-  <div id="result"></div>
-  
+
+  <script src="firebaseConfig.js"></script>
+  <script src="script.js"></script> <!-- El script de la lógica del juego -->
 </body>
 </html>

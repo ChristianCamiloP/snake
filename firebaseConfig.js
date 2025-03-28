@@ -1,9 +1,8 @@
-// Import the functions you need from the SDKs you need
+// Importar los módulos necesarios desde el SDK de Firebase
 import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs } from "firebase/firestore";
 
-// Your web app's Firebase configuration
+// Tu configuración de Firebase (reemplaza con tu propia configuración)
 const firebaseConfig = {
   apiKey: "AIzaSyDhgSdpsEd91_M4fa0EMBnbDeDUkwH2ojs",
   authDomain: "db-preguntas.firebaseapp.com",
@@ -13,5 +12,8 @@ const firebaseConfig = {
   appId: "1:1017897171716:web:a02f9095d2db96d85b2e51"
 };
 
-// Initialize Firebase
+// Inicializa Firebase
 const app = initializeApp(firebaseConfig);
+
+// Inicializa Firestore
+const db = getFirestore(app);

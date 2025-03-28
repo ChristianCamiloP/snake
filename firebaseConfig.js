@@ -1,6 +1,7 @@
 // firebaseConfig.js
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 // Tu configuración de Firebase (reemplaza con tu propia configuración)
 const firebaseConfig = {
@@ -14,9 +15,10 @@ const firebaseConfig = {
 
 // Inicializa Firebase
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+// Inicializa Firestore
 const db = getFirestore(app);
-
-
 
 export { db };  // Exporta la instancia de Firestore
 export default firebaseConfig;

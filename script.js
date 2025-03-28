@@ -1,6 +1,6 @@
 // script.js
 import { db } from './firebaseConfig.js';
-import { collection, getDocs, addDoc, query, orderBy, limit } from 'firebase/firestore';
+import { collection, getDocs, addDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 // Variables globales
 let currentQuestionIndex = 0;
@@ -37,22 +37,17 @@ const questions = [
 
 // Función para cargar la pregunta y respuestas
 function loadQuestion() {
-  console.log('Cargando pregunta...'); // Debugging
   if (currentQuestionIndex < questions.length) {
     const question = questions[currentQuestionIndex];
-    console.log('Pregunta cargada:', question); // Debugging
-
     document.getElementById("question").textContent = question.question;
 
     const buttons = document.querySelectorAll(".answer");
     buttons.forEach((button, index) => {
       button.textContent = question.answers[index];
-      button.disabled = false; // Asegúrate de que los botones sean habilitados nuevamente
+      button.disabled = false;
     });
 
     document.getElementById("result").textContent = '';
-  } else {
-    console.log('No hay más preguntas'); // Debugging
   }
 }
 
@@ -67,11 +62,9 @@ function checkAnswer(selectedAnswer) {
     document.getElementById("result").textContent = "¡Respuesta incorrecta!";
   }
 
-  // Desactivar los botones después de una respuesta
   const buttons = document.querySelectorAll(".answer");
   buttons.forEach(button => button.disabled = true);
 
-  // Avanzar a la siguiente pregunta después de 2 segundos
   setTimeout(() => {
     currentQuestionIndex++;
 
@@ -87,30 +80,27 @@ function checkAnswer(selectedAnswer) {
 // Función para guardar la puntuación en Firebase
 async function saveScore() {
   const playerName = prompt("¿Cómo te llamas?");
-
+  
   try {
-    // Guardar el puntaje en la colección "scores" de Firebase
     const docRef = await addDoc(collection(db, "scores"), {
       player: playerName,
       score: score,
       timestamp: new Date()
     });
-    console.log("Puntuación guardada con ID: ", docRef.id);
-    getHighScores(); // Obtener las puntuaciones más altas después de guardar la actual
+    getHighScores();
   } catch (e) {
     console.error("Error al guardar la puntuación: ", e);
-    document.getElementById("result").textContent = "Error al guardar la puntuación.";
   }
 }
 
 // Función para obtener las puntuaciones más altas desde Firebase
 async function getHighScores() {
   const scoresRef = collection(db, "scores");
-  const q = query(scoresRef, orderBy("score", "desc"), limit(5)); // Limitar a las 5 mejores puntuaciones
+  const q = query(scoresRef, orderBy("score", "desc"), limit(5));
   const querySnapshot = await getDocs(q);
   
   const highScoresList = document.getElementById("highScoresList");
-  highScoresList.innerHTML = ""; // Limpiar la lista antes de agregar nuevas puntuaciones
+  highScoresList.innerHTML = "";
 
   querySnapshot.forEach((doc) => {
     const data = doc.data();
@@ -122,6 +112,5 @@ async function getHighScores() {
 
 // Cargar la primera pregunta cuando se cargue la página
 window.onload = function() {
-  console.log('Juego cargado'); // Debugging
   loadQuestion();
 };

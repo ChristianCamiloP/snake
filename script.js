@@ -32,12 +32,15 @@ function moveCircle() {
   const circle = document.getElementById('circle');
   const gameContainer = document.getElementById('game-container');
   
+  // Asegurarnos de que el contenedor tenga un tamaño adecuado
   const maxX = gameContainer.offsetWidth - circle.offsetWidth;
   const maxY = gameContainer.offsetHeight - circle.offsetHeight;
 
+  // Obtener una posición aleatoria
   const randomX = Math.floor(Math.random() * maxX);
   const randomY = Math.floor(Math.random() * maxY);
 
+  // Posicionar el círculo en la ubicación aleatoria
   circle.style.left = `${randomX}px`;
   circle.style.top = `${randomY}px`;
 

@@ -1,6 +1,6 @@
 // script.js
 import { db } from './firebaseConfig.js';
-import { collection, getDocs, addDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import { collection, addDoc, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 // Variables globales
 let currentQuestionIndex = 0;
@@ -22,16 +22,6 @@ const questions = [
     question: "¿En qué continente está Egipto?",
     answers: ["África", "Asia", "Europa", "Oceanía"],
     correctAnswer: "África"
-  },
-  {
-    question: "¿Cuál es el océano más grande?",
-    answers: ["Atlántico", "Índico", "Pacífico", "Ártico"],
-    correctAnswer: "Pacífico"
-  },
-  {
-    question: "¿Cuál es el planeta más cercano al sol?",
-    answers: ["Venus", "Marte", "Mercurio", "Tierra"],
-    correctAnswer: "Mercurio"
   }
 ];
 
@@ -44,14 +34,14 @@ function loadQuestion() {
     const buttons = document.querySelectorAll(".answer");
     buttons.forEach((button, index) => {
       button.textContent = question.answers[index];
-      button.disabled = false;
+      button.disabled = false; // Asegúrate de que los botones sean habilitados nuevamente
     });
 
     document.getElementById("result").textContent = '';
   }
 }
 
-// Manejar la selección de respuesta
+// Función para verificar la respuesta seleccionada
 function checkAnswer(selectedAnswer) {
   const correctAnswer = questions[currentQuestionIndex].correctAnswer;
 
@@ -62,9 +52,11 @@ function checkAnswer(selectedAnswer) {
     document.getElementById("result").textContent = "¡Respuesta incorrecta!";
   }
 
+  // Desactivar los botones después de una respuesta
   const buttons = document.querySelectorAll(".answer");
   buttons.forEach(button => button.disabled = true);
 
+  // Avanzar a la siguiente pregunta después de 2 segundos
   setTimeout(() => {
     currentQuestionIndex++;
 
@@ -87,6 +79,7 @@ async function saveScore() {
       score: score,
       timestamp: new Date()
     });
+    console.log("Puntuación guardada con ID: ", docRef.id);
     getHighScores();
   } catch (e) {
     console.error("Error al guardar la puntuación: ", e);
@@ -96,11 +89,11 @@ async function saveScore() {
 // Función para obtener las puntuaciones más altas desde Firebase
 async function getHighScores() {
   const scoresRef = collection(db, "scores");
-  const q = query(scoresRef, orderBy("score", "desc"), limit(5));
+  const q = query(scoresRef, orderBy("score", "desc"), limit(5)); // Limita a las 5 mejores puntuaciones
   const querySnapshot = await getDocs(q);
   
   const highScoresList = document.getElementById("highScoresList");
-  highScoresList.innerHTML = "";
+  highScoresList.innerHTML = ""; // Limpiar la lista
 
   querySnapshot.forEach((doc) => {
     const data = doc.data();

@@ -14,12 +14,12 @@ body {
 #game-container {
   text-align: center;
   position: relative;
-  width: 80%;
+  width: 100%;
   max-width: 600px;
-}
-
-#question-container {
-  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 button {
@@ -30,7 +30,7 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin: 5px;
+  margin: 10px;
 }
 
 button:hover {
@@ -38,17 +38,11 @@ button:hover {
 }
 
 #result {
+  margin-top: 20px;
   font-size: 20px;
   font-weight: bold;
-  margin-top: 20px;
 }
 
 #high-scores {
   margin-top: 30px;
-  font-size: 18px;
-}
-
-#highScoresList {
-  list-style-type: none;
-  padding: 0;
 }

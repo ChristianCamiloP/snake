@@ -17,3 +17,4 @@ const app = initializeApp(firebaseConfig);
 
 // Inicializa Firestore
 const db = getFirestore(app);
+

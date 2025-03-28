@@ -4,25 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Juego de Preguntas</title>
-  
+
   <!-- Enlace al archivo de estilo -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-
 </head>
 <body>
   <div id="game-container">
     <h1>Juego de Preguntas</h1>
-    
+
     <div id="question-container">
       <h2 id="question">Pregunta aparecerá aquí</h2>
-      <button class="answer" onclick="checkAnswer('Respuesta1')">Respuesta 1</button>
-      <button class="answer" onclick="checkAnswer('Respuesta2')">Respuesta 2</button>
-      <button class="answer" onclick="checkAnswer('Respuesta3')">Respuesta 3</button>
-      <button class="answer" onclick="checkAnswer('Respuesta4')">Respuesta 4</button>
+      <button class="answer" id="answer1" onclick="checkAnswer(1)">Respuesta 1</button>
+      <button class="answer" id="answer2" onclick="checkAnswer(2)">Respuesta 2</button>
+      <button class="answer" id="answer3" onclick="checkAnswer(3)">Respuesta 3</button>
+      <button class="answer" id="answer4" onclick="checkAnswer(4)">Respuesta 4</button>
     </div>
 
     <div id="result"></div>

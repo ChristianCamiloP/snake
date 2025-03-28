@@ -1,6 +1,6 @@
-// Inicialización de Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// script.js
+import { db } from './firebaseConfig.js';
+import { collection, getDocs, addDoc, query, orderBy, limit } from 'firebase/firestore';
 
 // Variables globales
 let currentQuestionIndex = 0;
@@ -17,8 +17,22 @@ const questions = [
     question: "¿Cuál es la capital de España?",
     answers: ["Paris", "Madrid", "Londres", "Roma"],
     correctAnswer: "Madrid"
+  },
+  {
+    question: "¿En qué continente está Egipto?",
+    answers: ["África", "Asia", "Europa", "Oceanía"],
+    correctAnswer: "África"
+  },
+  {
+    question: "¿Cuál es el océano más grande?",
+    answers: ["Atlántico", "Índico", "Pacífico", "Ártico"],
+    correctAnswer: "Pacífico"
+  },
+  {
+    question: "¿Cuál es el planeta más cercano al sol?",
+    answers: ["Venus", "Marte", "Mercurio", "Tierra"],
+    correctAnswer: "Mercurio"
   }
-  // Agrega más preguntas aquí
 ];
 
 // Función para cargar la pregunta y respuestas
@@ -68,29 +82,30 @@ function checkAnswer(selectedAnswer) {
 // Función para guardar la puntuación en Firebase
 async function saveScore() {
   const playerName = prompt("¿Cómo te llamas?");
-  
+
   try {
-    // Guardar el score en Firebase
+    // Guardar el puntaje en la colección "scores" de Firebase
     const docRef = await addDoc(collection(db, "scores"), {
       player: playerName,
       score: score,
       timestamp: new Date()
     });
     console.log("Puntuación guardada con ID: ", docRef.id);
-    getHighScores();
+    getHighScores(); // Obtener las puntuaciones más altas después de guardar la actual
   } catch (e) {
     console.error("Error al guardar la puntuación: ", e);
+    document.getElementById("result").textContent = "Error al guardar la puntuación.";
   }
 }
 
 // Función para obtener las puntuaciones más altas desde Firebase
 async function getHighScores() {
   const scoresRef = collection(db, "scores");
-  const q = query(scoresRef, orderBy("score", "desc"), limit(5)); // Limita a las 5 mejores puntuaciones
+  const q = query(scoresRef, orderBy("score", "desc"), limit(5)); // Limitar a las 5 mejores puntuaciones
   const querySnapshot = await getDocs(q);
   
   const highScoresList = document.getElementById("highScoresList");
-  highScoresList.innerHTML = ""; // Limpiar la lista
+  highScoresList.innerHTML = ""; // Limpiar la lista antes de agregar nuevas puntuaciones
 
   querySnapshot.forEach((doc) => {
     const data = doc.data();

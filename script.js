@@ -1,5 +1,5 @@
 // script.js
-import { db } from './firebaseConfig.js';
+import { db } from '././firebaseConfig.js';
 import { collection, getDocs, addDoc, query, orderBy, limit } from 'firebase/firestore';
 
 // Variables globales

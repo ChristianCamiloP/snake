@@ -1,83 +1,73 @@
-import { db, collection, addDoc } from './firebaseConfig.js';
+document.addEventListener("DOMContentLoaded", () => {
+  const words = ["casa", "perro", "gato", "sol", "luz", "nube", "agua", "fuego", "árbol", "roca"];
+  let time = 60;
+  let score = 0;
+  let currentWord = "";
+  let playerName = "";
 
-let score = 0;
-let timeRemaining = 30;
-let gameInterval;
-let timerInterval;
+  const playerNameInput = document.getElementById("player-name");
+  const startButton = document.getElementById("start-game");
+  const gameArea = document.getElementById("game-area");
+  const wordDisplay = document.getElementById("word");
+  const inputWord = document.getElementById("input-word");
+  const timeDisplay = document.getElementById("time");
+  const scoreDisplay = document.getElementById("score");
+  const restartButton = document.getElementById("restart");
 
-// Función para iniciar el juego
-function startGame() {
-  document.getElementById('game-over').style.display = 'none';
-  score = 0;
-  timeRemaining = 30;
-  document.getElementById('score').textContent = score;
-  document.getElementById('timer').textContent = timeRemaining;
-
-  moveCircle(); // Mueve el círculo a una posición aleatoria
-
-  // Iniciar el temporizador de 30 segundos
-  timerInterval = setInterval(() => {
-    timeRemaining--;
-    document.getElementById('timer').textContent = timeRemaining;
-
-    if (timeRemaining <= 0) {
-      clearInterval(timerInterval);
-      endGame(); // Terminar el juego cuando se acabe el tiempo
-    }
-  }, 1000);
-}
-
-// Función para mover el círculo a una posición aleatoria
-function moveCircle() {
-  const circle = document.getElementById('circle');
-  const gameContainer = document.getElementById('game-container');
-  
-  // Asegurarnos de que el contenedor tenga un tamaño adecuado
-  const maxX = gameContainer.offsetWidth - circle.offsetWidth;
-  const maxY = gameContainer.offsetHeight - circle.offsetHeight;
-
-  // Obtener una posición aleatoria
-  const randomX = Math.floor(Math.random() * maxX);
-  const randomY = Math.floor(Math.random() * maxY);
-
-  // Posicionar el círculo en la ubicación aleatoria
-  circle.style.left = `${randomX}px`;
-  circle.style.top = `${randomY}px`;
-
-  // Mover el círculo cada 1.5 segundos
-  gameInterval = setTimeout(() => {
-    moveCircle();
-  }, 1500);
-}
-
-// Función cuando el jugador hace clic en el círculo
-document.getElementById('circle').addEventListener('click', () => {
-  score++;
-  document.getElementById('score').textContent = score;
-});
-
-// Función para terminar el juego
-function endGame() {
-  clearTimeout(gameInterval);
-  document.getElementById('game-over').style.display = 'block';
-  document.getElementById('final-score').textContent = score;
-}
-
-// Función para guardar la puntuación en Firebase
-document.getElementById('save-score-btn').addEventListener('click', async () => {
-  const playerName = prompt('¿Cómo te llamas?');
-  
-  try {
-    const docRef = await addDoc(collection(db, "scores"), {
-      player: playerName,
-      score: score,
-      timestamp: new Date()
-    });
-    console.log("Puntuación guardada con ID: ", docRef.id);
-  } catch (e) {
-    console.error("Error al guardar la puntuación: ", e);
+  function getRandomWord() {
+      return words[Math.floor(Math.random() * words.length)];
   }
-});
 
-// Iniciar el juego cuando se cargue la página
-window.onload = startGame;
+  function startGame() {
+      playerName = playerNameInput.value.trim();
+      if (!playerName) {
+          alert("Por favor, ingresa tu nombre.");
+          return;
+      }
+      
+      gameArea.style.display = "block";
+      startButton.style.display = "none";
+      playerNameInput.style.display = "none";
+      
+      currentWord = getRandomWord();
+      wordDisplay.textContent = currentWord;
+      inputWord.focus();
+
+      const timer = setInterval(() => {
+          time--;
+          timeDisplay.textContent = time;
+          if (time === 0) {
+              clearInterval(timer);
+              saveScore();
+              alert(`Tiempo agotado. Puntaje: ${score}`);
+              restartGame();
+          }
+      }, 1000);
+  }
+
+  function checkWord() {
+      if (inputWord.value.trim() === currentWord) {
+          score++;
+          scoreDisplay.textContent = score;
+          inputWord.value = "";
+          currentWord = getRandomWord();
+          wordDisplay.textContent = currentWord;
+      }
+  }
+
+  function saveScore() {
+      database.ref("players/" + playerName).set({
+          name: playerName,
+          score: score,
+          timestamp: new Date().toISOString()
+      });
+  }
+
+  function restartGame() {
+      location.reload();
+  }
+
+  inputWord.addEventListener("input", checkWord);
+  startButton.addEventListener("click", startGame);
+  restartButton.addEventListener("click", restartGame);
+});

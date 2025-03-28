@@ -1,23 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Juego de Atrapando el Círculo</title>
-  <link rel="stylesheet" href="style.css">
-  <script type="module" src="script.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Escritura</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="game-container">
-    <h1>Juego de Atrapando el Círculo</h1>
-    <p>Puntos: <span id="score">0</span></p>
-    <p>Tiempo restante: <span id="timer">30</span> segundos</p>
-    <div id="circle"></div>
-    <div id="game-over" style="display: none;">
-      <h2>¡Juego Terminado!</h2>
-      <p>Tu puntuación: <span id="final-score"></span></p>
-      <button id="save-score-btn">Guardar Puntaje</button>
+    <div class="container">
+        <h1>Juego de Escritura Rápida</h1>
+        <p>Ingresa tu nombre para comenzar:</p>
+        <input type="text" id="player-name" placeholder="Tu nombre">
+        <button id="start-game">Iniciar Juego</button>
+        
+        <div id="game-area" style="display: none;">
+            <p>Escribe la palabra que aparece a continuación lo más rápido posible.</p>
+            <h2 id="word"></h2>
+            <input type="text" id="input-word" placeholder="Escribe aquí...">
+            <p>Tiempo restante: <span id="time">60</span> s</p>
+            <p>Puntaje: <span id="score">0</span></p>
+            <button id="restart">Reiniciar</button>
+        </div>
     </div>
-  </div>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script src="firebaseConfig.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

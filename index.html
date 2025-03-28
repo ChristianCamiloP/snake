@@ -3,23 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Juego de Saltar Obstáculos</title>
+  <title>Juego de Preguntas</title>
+  
+  <!-- Enlace al archivo de estilo -->
   <link rel="stylesheet" href="style.css">
+
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+
 </head>
 <body>
   <div id="game-container">
-    <h1>Juego de Saltar Obstáculos</h1>
-    <canvas id="gameCanvas"></canvas>
-    <div id="game-over" style="display:none;">
-      <h2>¡Juego Terminado!</h2>
-      <p>Tu puntuación: <span id="score"></span></p>
-      <button onclick="saveScore()">Guardar Puntuación</button>
+    <h1>Juego de Preguntas</h1>
+    
+    <div id="question-container">
+      <h2 id="question">Pregunta aparecerá aquí</h2>
+      <button class="answer" onclick="checkAnswer('Respuesta1')">Respuesta 1</button>
+      <button class="answer" onclick="checkAnswer('Respuesta2')">Respuesta 2</button>
+      <button class="answer" onclick="checkAnswer('Respuesta3')">Respuesta 3</button>
+      <button class="answer" onclick="checkAnswer('Respuesta4')">Respuesta 4</button>
+    </div>
+
+    <div id="result"></div>
+
+    <div id="high-scores">
+      <h3>Puntuaciones más altas:</h3>
+      <ul id="highScoresList"></ul>
     </div>
   </div>
-  <script src="firebaseConfig.js"></script>
-  <script src="script.js"></script>
+
+  <script src="firebaseConfig.js"></script> <!-- Archivo de configuración Firebase -->
+  <script src="script.js"></script> <!-- Lógica del juego -->
 </body>
 </html>

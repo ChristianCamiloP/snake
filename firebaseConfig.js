@@ -4,13 +4,13 @@ import { getFirestore } from "firebase/firestore";
 
 // Configuración de Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyAphrLdNrDnOyFJwY6dVD8oJTTYA-DXAME",
-  authDomain: "juego-db.firebaseapp.com",
-  projectId: "juego-db",
-  storageBucket: "juego-db.firebasestorage.app",
-  messagingSenderId: "967613130349",
-  appId: "1:967613130349:web:2f4c21392cad7d6dc60164",
-  measurementId: "G-64PBJ1EJX4"
+  apiKey: "AIzaSyA3oslVWKJQTqpDRkHxTRm14NCtd4oMDn8",
+  authDomain: "dbdigitar-8eafa.firebaseapp.com",
+  projectId: "dbdigitar-8eafa",
+  storageBucket: "dbdigitar-8eafa.firebasestorage.app",
+  messagingSenderId: "600216230142",
+  appId: "1:600216230142:web:5ded152bf7f72c8633edaf",
+  measurementId: "G-396G472VL7"
 };
 
 // Inicializa Firebase

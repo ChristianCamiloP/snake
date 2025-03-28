@@ -1,12 +1,11 @@
 // Configuración de Firebase
 const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_AUTH_DOMAIN",
-    projectId: "TU_PROJECT_ID",
-    storageBucket: "TU_STORAGE_BUCKET",
-    messagingSenderId: "TU_MESSAGING_SENDER_ID",
-    appId: "TU_APP_ID",
-    measurementId: "TU_MEASUREMENT_ID"
+    apiKey: "AIzaSyDhgSdpsEd91_M4fa0EMBnbDeDUkwH2ojs",
+    authDomain: "db-preguntas.firebaseapp.com",
+    projectId: "db-preguntas",
+    storageBucket: "db-preguntas.firebasestorage.app",
+    messagingSenderId: "1017897171716",
+    appId: "1:1017897171716:web:a02f9095d2db96d85b2e51"
 };
 
 // Inicializar Firebase
